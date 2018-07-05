@@ -15,6 +15,49 @@ class MyApp extends StatelessWidget {
   }
 }
 
+class FavoriteWidget extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => FavoriteWidgetState();
+}
+
+class FavoriteWidgetState extends State<FavoriteWidget> {
+  bool isFavorited = true;
+  int favoriteCount = 41;
+
+  void _toggleFavorite() {
+    setState(() {
+      if (isFavorited) {
+        isFavorited = false;
+        favoriteCount--;
+      } else {
+        isFavorited = true;
+        favoriteCount++;
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Container(
+          padding: EdgeInsets.all(0.0),
+          child: IconButton(
+              icon: Icon(
+                isFavorited ? Icons.star : Icons.star_border,
+                color: Colors.red,
+              ),
+              onPressed: _toggleFavorite),
+        ),
+        SizedBox(
+          width: 18.0,
+          child: Container(child: Text("$favoriteCount")),
+        )
+      ],
+    );
+  }
+}
+
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
@@ -69,11 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
             ),
-            Icon(
-              Icons.star,
-              color: Colors.red,
-            ),
-            Text("42")
+            FavoriteWidget(),
           ],
         ));
 
